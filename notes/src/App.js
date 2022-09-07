@@ -1,10 +1,13 @@
 import logo from "./logo.svg";
+import Navbar from "./components/Header";
+import Main from "./components/Main";
 import "./App.css";
 
 function App() {
   return (
     <div className="App">
-      <h1 className="text-3xl font-bold underline">Hello world!</h1>
+      <Navbar />
+      <Main />
     </div>
   );
 }
