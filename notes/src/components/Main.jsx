@@ -1,13 +1,21 @@
 import React, { useState, useEffect } from "react";
 
 function Main() {
-  const [tasks, setTasks] = useState([]);
-  const [tasksCompleted, setTasksCompleted] = useState([]);
+  const [tasks, setTasks] = useState(
+    JSON.parse(localStorage.getItem("tasks")) || []
+  );
+  const [tasksCompleted, setTasksCompleted] = useState(
+    JSON.parse(localStorage.getItem("tasksCompleted")) || []
+  );
   const [userInput, setUserInput] = useState("");
 
   useEffect(() => {
     localStorage.setItem("tasks", JSON.stringify(tasks));
   }, [tasks]);
+
+  useEffect(() => {
+    localStorage.setItem("tasksCompleted", JSON.stringify(tasksCompleted));
+  }, [tasksCompleted]);
 
   function handleChange(e) {
     setUserInput(e.target.value);
@@ -29,6 +37,7 @@ function Main() {
     );
 
     tasks.splice(indexToBeRemoved, 1);
+
     setTasks((prevTasks) => {
       return [...prevTasks];
     });
@@ -36,18 +45,17 @@ function Main() {
 
   function completeTask(e) {
     // console.log(e);
-    // console.log(e.target);
 
     const t = e.target.parentNode.parentNode.children;
     const indexToBeRemoved = tasks.findIndex(
       (task) => task === t[0].textContent
     );
 
+    const finishedTask = tasks.splice(indexToBeRemoved, 1);
+
     setTasks((prevTasks) => {
       return [...prevTasks];
     });
-
-    const finishedTask = tasks.splice(indexToBeRemoved, 1);
 
     setTasksCompleted((prevTasksCompleted) => [
       ...prevTasksCompleted,
@@ -116,17 +124,6 @@ function Main() {
         <h1>All user tasks done</h1>
         <div className="tasks flex flex-wrap"> {allUserTasksCompleted}</div>
       </div>
-      <h1 className="font-serif text-3xl w-10/12 font-bold text-center">
-        Hi how's it going?
-      </h1>
-      <p className="text-justify px-10">
-        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quae nam animi
-        voluptate quo debitis quasi iusto explicabo, nobis error accusantium
-        dignissimos voluptates! Perferendis minima non sed nobis itaque, iure
-        dolores.
-      </p>
-      <h1 className="font-sans text-3xl font-semibold">Yeah not bad thanks.</h1>
-      <h1 className="font-mono text-3xl font-medium">How are ya?</h1>
     </main>
   );
 }
