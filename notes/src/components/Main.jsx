@@ -1,9 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 function Main() {
   const [tasks, setTasks] = useState([]);
   const [tasksCompleted, setTasksCompleted] = useState([]);
   const [userInput, setUserInput] = useState("");
+
+  useEffect(() => {
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+  }, [tasks]);
 
   function handleChange(e) {
     setUserInput(e.target.value);
@@ -54,11 +58,13 @@ function Main() {
   const allUserTasks = tasks.map((task) => {
     return (
       <div
-        className="flex flex-col bg-yellow-500 text-white mx-10 my-5"
+        className="flex flex-col bg-yellow-500 h-52 w-80 max-w-md rounded-lg text-white mx-10 my-5 items-start"
         key={task}
       >
-        <h1 className="user-task py-2">{task}</h1>
-        <div className="flex gap-4 m-4">
+        <div>
+          <h1 className="user-task py-2 px-4 text-3xl text-left">{task}</h1>
+        </div>
+        <div className="flex gap-4 m-3">
           <button
             className="delete-btn btns px-3 py-2 bg-red-500 rounded-lg"
             onClick={deleteTask}
@@ -79,7 +85,7 @@ function Main() {
   const allUserTasksCompleted = tasksCompleted.map((task) => {
     return (
       <div
-        className="container-title bg-green-400 text-white p-4 m-5 rounded-sm"
+        className="container-title bg-green-500 text-white p-4 m-5 rounded-sm"
         key={task}
       >
         {task}
@@ -88,25 +94,39 @@ function Main() {
   });
 
   return (
-    <main className="flex flex-col">
+    <main className="flex flex-col items-start">
       <form className="search-bar m-7 px-1 flex border-black border-2 rounded-md">
         <input
           type="text"
           placeholder="What all tasks are you planning to accomplish today..."
           name="tasks"
-          className="w-48 border-black px-5 py-1 outline-none"
+          className="w-96 px-2 py-1 outline-none"
           onChange={handleChange}
           value={userInput}
         />
-        <button className="create-btn btn" onClick={handleClick}>
+        <button
+          className="bg-yellow-500 px-4 py-1 rounded-mg mx-3 my-2"
+          onClick={handleClick}
+        >
           Create task
         </button>
       </form>
       <div className="flex flex-wrap">{allUserTasks}</div>
-      <div className="tasks-done flex flex-col justify-items-start">
+      <div className="tasks-done flex flex-col items-start mx-4">
         <h1>All user tasks done</h1>
-        <div className="tasks flex"> {allUserTasksCompleted}</div>
+        <div className="tasks flex flex-wrap"> {allUserTasksCompleted}</div>
       </div>
+      <h1 className="font-serif text-3xl w-10/12 font-bold text-center">
+        Hi how's it going?
+      </h1>
+      <p className="text-justify px-10">
+        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quae nam animi
+        voluptate quo debitis quasi iusto explicabo, nobis error accusantium
+        dignissimos voluptates! Perferendis minima non sed nobis itaque, iure
+        dolores.
+      </p>
+      <h1 className="font-sans text-3xl font-semibold">Yeah not bad thanks.</h1>
+      <h1 className="font-mono text-3xl font-medium">How are ya?</h1>
     </main>
   );
 }
