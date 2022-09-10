@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from "react";
 
+// sms key ='8cUAvSLgDyyg8zk1KcIktxWW8iZGlOrGFxu2UWoYoWt0VltUFs1yCcgDUvSNJIh4IZb00X+T9nBup56+812D3IbfKx'
+// sms key2 ='hrnHgWNiVvUFUzfIwBiTYYVzL3ANe1bWi4KmHx8X6TpWAskQg26Fq4WiZR0csKk2'
+
 function Main() {
   const [tasks, setTasks] = useState(
     JSON.parse(localStorage.getItem("tasks")) || []
@@ -8,6 +11,7 @@ function Main() {
     JSON.parse(localStorage.getItem("tasksCompleted")) || []
   );
   const [userInput, setUserInput] = useState("");
+  const [count, setCount] = useState(0);
 
   useEffect(() => {
     localStorage.setItem("tasks", JSON.stringify(tasks));
@@ -16,6 +20,35 @@ function Main() {
   useEffect(() => {
     localStorage.setItem("tasksCompleted", JSON.stringify(tasksCompleted));
   }, [tasksCompleted]);
+
+  /*
+  useEffect(() => {
+    const checkIfItsTime = function () {
+      const today = new Date();
+      if (today.getHours() == 14 && today.getMinutes() == 30) {
+        alert(`It's time !!!`);
+        console.log("ok");
+        clearInterval(alertMe);
+        setCount(1);
+      }
+      setCount((prevCount) => prevCount + 1);
+      console.log(today.getSeconds(), count);
+    };
+
+    const alertMe = setInterval(checkIfItsTime, 60000);
+    return () => clearInterval(alertMe);
+  }, [count]);
+  */
+
+  /*
+  useEffect(() => {
+    const greet = function () {
+      console.log("Hiii");
+    };
+
+    const startGreet = setInterval(greet, 2500);
+  });
+  */
 
   function handleChange(e) {
     setUserInput(e.target.value);
